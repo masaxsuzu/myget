@@ -1,0 +1,27 @@
+﻿<Project>
+  <Target Name="BeforeBuild">
+    <ItemGroup>
+      <AssemblyAttributes Include="AssemblyVersion">
+        <_Parameter1>$(Version)</_Parameter1>
+      </AssemblyAttributes>
+      <AssemblyAttributes Include="AssemblyCompany">
+        <_Parameter1>$(Company)</_Parameter1>
+      </AssemblyAttributes>
+      <AssemblyAttributes Include="AssemblyTitle">
+        <_Parameter1>$(Title)</_Parameter1>
+      </AssemblyAttributes>	
+      <AssemblyAttributes Include="AssemblyProduct">
+        <_Parameter1>$(Product)</_Parameter1>
+      </AssemblyAttributes>
+    </ItemGroup>
+    <MakeDir Directories="$(IntermediateOutputPath)" />
+    <WriteCodeFragment 
+      Condition=" '$(Configuration)' == 'Release' "
+      Language="C#"
+      OutputFile="$(IntermediateOutputPath)Version.cs"
+      AssemblyAttributes="@(AssemblyAttributes)"/>
+    <ItemGroup>
+      <Compile Include="$(IntermediateOutputPath)Version.cs" />
+    </ItemGroup>
+  </Target>
+</Project>

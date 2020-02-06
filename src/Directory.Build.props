@@ -1,0 +1,19 @@
+﻿<Project>
+  <PropertyGroup>
+    <Authors>masaxsuzu+github.com@gmail.com</Authors>
+    <LangVersion>latest</LangVersion>
+    <Deterministic>true</Deterministic>
+    <RepoRoot>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\'))</RepoRoot>
+    <PathMap>$(RepoRoot)=.</PathMap>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageOutputPath>$(RepoRoot)pkg</PackageOutputPath>
+    <AssemblyDescription>"AssemblyDescription"</AssemblyDescription>
+    <AssemblyCompany>"AssemblyCompany"</AssemblyCompany>
+    <AssemblyProduct>"AssemblyDescription"</AssemblyProduct>
+    <AssemblyCopyright>"AssemblyDescription"</AssemblyCopyright>
+  
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="NuGet.Build.Tasks.Pack" Version="5.2.0"/>
+  </ItemGroup>
+</Project>
