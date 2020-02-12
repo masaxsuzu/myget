@@ -1,0 +1,15 @@
+name: .NET Framework
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: warrenbuckley/Setup-Nuget@v1
+    - run: nuget restore $Env:GITHUB_WORKSPACE\myget.sln
+    - uses: warrenbuckley/Setup-MSBuild@v1
+    - run: powershell $Env:GITHUB_WORKSPACE\build\with-version.ps1
