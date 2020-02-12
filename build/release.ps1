@@ -1,14 +1,15 @@
 $ErrorActionPreference = "Stop"
 
 $info = Get-Content .\Product.json | ConvertFrom-Json
-$Version = $info.version
+$version = $info.version
+$build = $info.build
 $Title = $info.title
-$Company = $info.company
-$Product = $info.name
+$company = $info.company
+$product = $info.name
 
-msbuild /t:ReBuild              `
-    /p:Configuration=Release    `
-    /p:Version=$Version         `
-    /p:Title=$Title             `
-    /p:Company=$Company         `
-    /p:Product=$Product
+msbuild /t:ReBuild               `
+    /p:Configuration=Release     `
+    /p:Version="$version.$build" `
+    /p:Title=$Title              `
+    /p:Company=$company          `
+    /p:Product=$product
