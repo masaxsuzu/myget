@@ -1,9 +1,9 @@
-$ErrorActionPreference = "Stop"
-
-try {
-    Push-Location  $PSScriptRoot
+function Run {
+    param (
+        $args,
+        $info
+    )
     
-    $info = Get-Content ..\Product.json | ConvertFrom-Json
     $version = $info.version
     $build = $info.build
     $Title = $info.title
@@ -17,7 +17,28 @@ try {
         /p:Company=$company          `
         /p:Product=$product          `
         ..\myget.sln
+
+}
+
+#region script template
+
+$ErrorActionPreference = "Stop"
+
+function StopIfError {
+    param (
+        $message
+    )
+    if(!$?){
+        throw $message
+    }
+}
+
+try {
+    Push-Location  $PSScriptRoot
+    Run $Args $(Get-Content ..\product.json | ConvertFrom-Json)
 }
 finally {
     Pop-Location
 }
+
+#endregion

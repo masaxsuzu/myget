@@ -16,4 +16,3 @@ jobs:
     - run: nuget restore $Env:GITHUB_WORKSPACE\myget.sln
     - uses: warrenbuckley/Setup-MSBuild@v1
     - run: powershell $Env:GITHUB_WORKSPACE\build\with-version.ps1
-    - run: powershell $Env:GITHUB_WORKSPACE\build\to-package.ps1
