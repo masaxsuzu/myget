@@ -341,4 +341,4 @@ healthchecksdb
 
 # Packages
 pkg
-sbx
+/sbx

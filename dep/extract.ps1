@@ -3,7 +3,7 @@ function Run {
         $args,
         $info
     )
-    
+    $myget_contents = "MyGet.Contents"
     $lib_net472 = "lib\net472\"
     $lib_netstandard20 = "lib\netstandard2.0\"
     $lib_netother = "lib\net"
@@ -28,7 +28,13 @@ function Run {
             
             $file = ($_.FullName).Replace("$($parent.FullName)\$($packageName)\","")
 
-            if ($file.StartsWith($lib_net472)){
+            if ($packageName.StartsWith($myget_contents)){
+                if($file.StartsWith($content)){
+                    $binFile = $file.Replace($content,"")
+                    Copy-File $_.FullName "$($parent.Parent.FullName)\$sbx\$($binFile)"
+                }
+            }
+            elseif ($file.StartsWith($lib_net472)){
                 $binFile = $file.Replace($lib_net472,"")
                 Copy-File $_.FullName "$($parent.Parent.FullName)\$sbx\$bin\$($binFile)"
             } 
