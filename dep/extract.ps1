@@ -23,12 +23,14 @@ function Run {
         $parent = $_.Parent
         $packageName = $_.Name
 
-        # sbx\bin
         ls $_.FullName -r -File -exclude "*.nupkg" | % {
             
             $file = ($_.FullName).Replace("$($parent.FullName)\$($packageName)\","")
 
-            if ($packageName.StartsWith($myget_contents)){
+            if ($file.Contains("MyGet.Dep.dll")){
+                # Skip
+            }
+            elseif ($packageName.StartsWith($myget_contents)){
                 if($file.StartsWith($content)){
                     $binFile = $file.Replace($content,"")
                     Copy-File $_.FullName "$($parent.Parent.FullName)\$sbx\$($binFile)"
