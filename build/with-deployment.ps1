@@ -1,14 +1,16 @@
 function Run {
     param (
-        $args,
+        $_args,
         $info
     )
     
     nuget locals all -clear
     msbuild ..\myget.sln -t:clean
+    New-Item ..\pkg -ItemType Directory -force
+    nuget sources add -name "local-myget" -source "$(Split-Path $pwd -Parent)\pkg"
     nuget restore ..\myget.sln
-    
-    ..\build\with-version.ps1
+
+    ..\build\with-version.ps1 "Release"
 
     StopIfError "Build error"
 
@@ -16,11 +18,11 @@ function Run {
 
     StopIfError "Package error"
 
-    nuget install MyGet.Dep -outputdir ..\pkg    
+    nuget install MyGet.Dep -outputdir ..\dep    
 
     StopIfError "Install error"
 
-    ..\dep\extract.ps1
+    ..\dep\extract.ps1 "..\sbx"
 
     StopIfError "Deployment error"
 
@@ -44,6 +46,7 @@ try {
     Run $Args $(Get-Content ..\product.json | ConvertFrom-Json)
 }
 finally {
+    nuget sources remove -name "local-myget"
     Pop-Location
 }
 

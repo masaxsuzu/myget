@@ -342,3 +342,6 @@ healthchecksdb
 # Packages
 pkg
 /sbx
+!/dep/.specs
+!/dep/*.ps1
+/dep

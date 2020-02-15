@@ -1,8 +1,9 @@
 function Run {
     param (
-        $args,
+        $_args,
         $info
     )
+
     $myget_contents = "MyGet.Contents"
     $lib_net472 = "lib\net472\"
     $lib_netstandard20 = "lib\netstandard2.0\"
@@ -11,14 +12,13 @@ function Run {
     $lib = "lib\"
     $content = "content\"
 
-    $sbx = "sbx"
+    $sbx = $_args[0]
     $bin = "bin"
-
-    if(Test-Path ..\$sbx\$bin) {
-        Remove-Item ..\$sbx\$bin -r -force
+    if(Test-Path $sbx) {
+        Remove-Item $sbx -r -force
     }
 
-    ls ..\pkg -Directory | % {
+    ls ..\dep -Directory | % {
 
         $parent = $_.Parent
         $packageName = $_.Name
@@ -33,16 +33,16 @@ function Run {
             elseif ($packageName.StartsWith($myget_contents)){
                 if($file.StartsWith($content)){
                     $binFile = $file.Replace($content,"")
-                    Copy-File $_.FullName "$($parent.Parent.FullName)\$sbx\$($binFile)"
+                    Copy-File $_.FullName "$sbx\$($binFile)"
                 }
             }
             elseif ($file.StartsWith($lib_net472)){
                 $binFile = $file.Replace($lib_net472,"")
-                Copy-File $_.FullName "$($parent.Parent.FullName)\$sbx\$bin\$($binFile)"
+                Copy-File $_.FullName "$sbx\$bin\$($binFile)"
             } 
             elseif ($file.StartsWith($lib_netstandard20)){
                 $binFile = $file.Replace($lib_netstandard20,"")
-                Copy-File $_.FullName "$($parent.Parent.FullName)\$sbx\$bin\$($binFile)"
+                Copy-File $_.FullName "$sbx\$bin\$($binFile)"
             }
             elseif ($file.StartsWith($lib_netother)){
                 # Skip
@@ -52,11 +52,11 @@ function Run {
             }
             elseif ($file.StartsWith($lib)) {
                 $binFile = $file.Replace($lib,"")
-                Copy-File $_.FullName "$($parent.Parent.FullName)\$sbx\$bin\$($binFile)"
+                Copy-File $_.FullName "$sbx\$bin\$($binFile)"
             } 
             elseif ($file.StartsWith($content)) {
                 $binFile = $file.Replace($content,"")
-                Copy-File $_.FullName "$($parent.Parent.FullName)\$sbx\$bin\$($binFile)"
+                Copy-File $_.FullName "$sbx\$bin\$($binFile)"
             }      
         }
     }
@@ -65,7 +65,6 @@ function Run {
 
 function Copy-File {
     param($fileFrom, $fileTo)
-
     New-Item $fileTo -force
     Copy-Item $fileFrom $fileTo  
 }

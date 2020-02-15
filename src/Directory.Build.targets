@@ -16,7 +16,7 @@
     </ItemGroup>
     <MakeDir Directories="$(IntermediateOutputPath)" />
     <WriteCodeFragment 
-      Condition=" '$(WriteCodeFragment)' != 'False' "
+      Condition=" '$(WriteCodeFragment)' != 'False' and !Exists('$(IntermediateOutputPath)Version.cs')"
       Language="C#"
       OutputFile="$(IntermediateOutputPath)Version.cs"
       AssemblyAttributes="@(AssemblyAttributes)"/>
