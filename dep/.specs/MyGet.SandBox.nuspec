@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>MyGet.SandBox</id>
+        <version>1.0.0</version>
+        <description>Files in SandBox</description>
+        <authors>masaxsuzu+github@gmail.com</authors>
+    </metadata>
+    <files>
+        <file src="..\..\sbx\bin\*" target="sbx\bin" />
+    </files>
+</package>
