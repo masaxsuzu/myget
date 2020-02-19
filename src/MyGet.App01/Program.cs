@@ -10,6 +10,7 @@ namespace MyGet.App01
     {
         static void Main(string[] _)
         {
+            System.Console.WriteLine("Hello, Myget.");
         }
     }
 }
